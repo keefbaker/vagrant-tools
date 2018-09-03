@@ -1,0 +1,38 @@
+---
+
+- name: Docker pre-reqs
+  include: "docker-{{ ansible_os_family | lower }}.yml"
+- name: install docker
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-ce
+- name: install docker-compose
+  package:
+    name: "{{ item }}"
+    state: present
+  when: options.docker_compose
+  with_items:
+    - docker-compose
+- name: add vagrant user to docker group
+  user:
+    name: "{{ vagrant_user }}"
+    groups: docker
+    append: yes
+- name: Create /etc/docker
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+- name: install daemon.json
+  copy:
+    src: docker_daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 0600
+  when: options.docker_ipv6
+- name: docker restart
+  service:
+    name: docker
+    state: restarted
+  when: options.docker_ipv6

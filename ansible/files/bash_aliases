@@ -1,0 +1,8 @@
+eval "$(direnv hook bash)"
+eval "$(chef shell-init bash)"
+export PS1='\[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h \[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n\$ '
+alias gti='git'
+alias sshagent='eval `ssh-agent`  && ssh-add ~/.ssh/id_rsa'
+alias ntpdate_update='sudo ntpdate -s time.nist.gov'
+alias docker_rm_exited='docker rm -v $(docker ps -a -q -f status=exited)'
+PATH="${PATH}:${HOME}/bin"

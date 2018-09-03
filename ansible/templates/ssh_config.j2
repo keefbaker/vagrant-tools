@@ -1,0 +1,19 @@
+Host forward-example
+  LocalForward 0.0.0.0:7180 localhost:7180
+  LocalForward 0.0.0.0:7183 localhost:7183
+  ProxyCommand ssh forward-example.test.com -W %h:%p
+  User bob
+  StrictHostKeyChecking no
+  ForwardAgent yes
+  ServerAliveInterval 60
+  UserKnownHostsFile /dev/null
+
+Host hostbob
+  HostName bastorium
+  DynamicForward 0.0.0.0:8080
+  User bob
+  StrictHostKeyChecking no
+  ForwardAgent yes
+  ServerAliveInterval 60
+  UserKnownHostsFile /dev/null
+

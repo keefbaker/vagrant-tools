@@ -1,0 +1,21 @@
+---
+  - name: Check {{tool_name}} version
+    shell: "{{tool_name}} --version 2>&1 | grep {{tool_version}}"
+    failed_when: false
+    changed_when: false
+    register: "versions_match"
+  - name: "Download {{tool_name}} archive Linux 64 bits"
+    get_url:
+      url: https://releases.hashicorp.com/{{tool_name}}/{{tool_version}}/{{tool_name}}_{{tool_version}}_linux_amd64.zip
+      dest: /tmp/{{tool_name}}-{{tool_version}}.zip
+    when: versions_match.rc != 0
+  - name: "Install unzip to unarchive {{tool_name}}"
+    package:
+      name: unzip
+      state: present
+  - name: "Unarchive {{tool_name}} archive"
+    unarchive:
+      src: "/tmp/{{tool_name}}-{{tool_version}}.zip"
+      dest: "{{local_bin_dir}}"
+      copy: no
+    when: versions_match.rc != 0

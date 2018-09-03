@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  connection: local
+  become: true
+  vars_files:
+    - ../secrets/vars.yml
+  tasks:
+    - include: tasks/common.yml
