@@ -1,3 +1,4 @@
 secrets/id*
 secrets/*.yml
 *-console.log
+.vagrant/
