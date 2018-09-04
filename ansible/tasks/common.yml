@@ -10,6 +10,7 @@
     - pwgen
     - zip
     - unzip
+    - gcc
 - name: install debian packages
   package:
     name: "{{ item }}"
@@ -17,7 +18,24 @@
   with_items:
     - shellcheck
     - libffi-dev
-  when: ansible_os_family == "debian"
+  when: ansible_os_family == "Debian"
+- name: install rhel packages
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rpm-build 
+    - rpm-devel 
+    - rpmlint 
+    - make
+    - coreutils 
+    - diffutils 
+    - patch 
+    - rpmdevtools
+    - openssl
+    - openssl-devel
+    - gcc-c++
+  when: ansible_os_family == "RedHat"
 - name: pip install
   pip:
     name: "{{ item }}"
@@ -29,6 +47,7 @@
     - flake8
     - docker
     - boto3
+    - virtualenv
 - name: pip install versions
   pip:
     name: "{{ item.name }}"
@@ -42,3 +61,6 @@
 - name: default editor to vim
   shell: update-alternatives --set editor /usr/bin/vim.basic
   when: ansible_os_family == "debian"
+- name: git-crypt for rhel
+  include_tasks: rhel-git.yml
+  when: ansible_os_family == "RedHat"

@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/bionic64"
- # config.vm.box_version = "20180214.0.0"
+  # config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "bento/centos-7"
 
   config.vm.define "vagrant-tools" do |pp|
   end
