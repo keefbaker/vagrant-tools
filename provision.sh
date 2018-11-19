@@ -24,4 +24,5 @@ else
   prereqs_centos
 fi
 
+pip install --upgrade pip
 pip install ansible pyOpenSSL

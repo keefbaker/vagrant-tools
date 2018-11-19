@@ -36,12 +36,8 @@
           mode: 0500
     - name: install extra packages
       apt:
-        name: "{{ item }}"
+        name: ['git-crypt', 'direnv', 'virtualenv']
         state: present
-      with_items:
-        - git-crypt
-        - direnv
-        - virtualenv
       when: ansible_os_family == "Debian"
     - name: Download ChefDK deb (moved early to prevent wifi issues)
       get_url:

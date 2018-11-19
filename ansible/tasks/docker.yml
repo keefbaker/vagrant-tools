@@ -33,6 +33,6 @@
   when: options.docker_ipv6
 - name: docker restart
   service:
+    enabled: yes
     name: docker
-    state: restarted
-  when: options.docker_ipv6
+    state: started
